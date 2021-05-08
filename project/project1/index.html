@@ -60,7 +60,7 @@
  
 <div class="blog-title">
           <h4>
-         January 1, 0001 
+         April 1, 2021 
             &nbsp;&nbsp;
             
           </h4>
@@ -498,7 +498,7 @@ tidycor %&gt;% ggplot(aes(var1, var2, fill = correlation)) + geom_tile() +
     geom_text(aes(label = round(correlation, 2)), color = &quot;black&quot;, 
         size = 3) + theme(axis.text.x = element_text(angle = 45, 
     vjust = 1, size = 6.5, hjust = 1)) + ggtitle(&quot;Correlation Heatmap&quot;)</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
 <em>This heatmap shows the correlation between all numerical variables in the dataset. It appears that the number of aggravated assaults is highly correlated to the population of each state (Cor=0.97). It also appears that the number of aggravated assaults is highly correlated to the use of firearms during assaults (Cor=0.94). There is a weak correlation between certain variables shown in the heatmap, which is understandable considering ‘assault.percapita’ and ‘proportion.firearm’ are both functions of other variables. A correlation in these variables is not expected. </em></p>
 <pre class="r"><code># Mean Assaults per capita, grouped by Marijuana Legalization
 # Status
@@ -507,7 +507,7 @@ fulldat %&gt;% ggplot(aes(x = Legalization.Status, y = assault.percapita)) +
     geom_errorbar(stat = &quot;summary&quot;, fun.data = mean_se) + theme(axis.title.x = element_blank(), 
     axis.text.x = element_blank(), axis.ticks.x = element_blank()) + 
     ggtitle(&quot;Mean Assaults Per Capita by legalization status&quot;)</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
 <em>This chart maps the assaults per capita for states grouped by their marijuana legalization status. From intial appearance, it appears that states where marijuana is legalized for recreational use have a higher count of assaults per capita than states where marijuana is only legalized for medical use and states where marijuana is not legalized at all. After controlling for standard error, it appears that there is nno significant difference in the number of assaults per capita between states of different legalization statuses.</em></p>
 <pre class="r"><code># Total Aggravated Assaults by Population, grouped by
 # Marijuana Legalization Status
@@ -515,7 +515,7 @@ fulldat %&gt;% ggplot(aes(x = Population/1e+06, y = Total..aggravated..assaults1
     color = Legalization.Status)) + geom_point(size = 1) + scale_x_continuous(name = &quot;Population (million)&quot;) + 
     scale_y_continuous(name = &quot;Total Aggravated Assaults&quot;, breaks = seq(0, 
         150000, 5000)) + ggtitle(&quot;Total Aggravated Assaults by population, grouped by MJ Legalization Status&quot;)</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
 <em>This chart displays how the total number of aggravated assaults changes with respect to population in all 50 states. They are also color-coded by marijuana legalization status, which makes it easier to visualize how legalization status influences (or is influenced by) the total number of aggravated assaults as well as population. From the data, it can be seen that there is little correlation between legalization status and population, and little correlation between legalizationn status and the number of aggravated assaults.</em></p>
 <ol start="5" style="list-style-type: decimal">
 <li>Perform k-means/PAM clustering or PCA on (at least) your numeric variables.</li>
@@ -536,7 +536,7 @@ for (i in 2:10) {
 }
 ggplot() + geom_line(aes(x = 1:10, y = sil_width)) + scale_x_continuous(name = &quot;k&quot;, 
     breaks = 1:10)</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
 <em>The data above shows that 4 clusters has the highest average silhouette width, meaning that 4 clusters is the ideal cluster count that I will be using for PAM clustering.</em></p>
 <pre class="r"><code># Performing pam with ideal number of clusters from above.
 # Telling pam to use dissimilarities
@@ -572,14 +572,14 @@ cat_dat %&gt;% mutate(cluster = factor(pam3$clustering)) %&gt;% select(cluster,
 <pre class="r"><code># Computing Goodness of Fit using silhouette plot of each
 # cluster.
 plot(pam3, which = 2)</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><em>The plot above shows silhouettes with an average width of 0.71, meaning a strong structure has been found when categorizing each cluster. Cluster 4 appears to have a very weak structure. In a repeat experiment, 3 clusters would probably be more accurate for categorizing the data.</em></p>
 <pre class="r"><code># Generating final visualization for pam clustering
 library(GGally)
 fulldat %&gt;% mutate(cluster = as.factor(pam3$clustering)) %&gt;% 
     ggpairs(columns = 2:5, aes(color = cluster)) + theme(axis.text.x = element_text(angle = 45, 
     vjust = 1, size = 6.5, hjust = 1))</code></pre>
-<p><img src="../../project/Project1.AF.official_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
 <em>In the data above, it can be seen that each cluster is accurately categorized by legalization status, with the exception of cluster 4 which contains States from all three categories. States in cluster 4 appear to be highly populated states which also have greater cases of aggravated assaults. States where marijuana is illegal (Cluster1) appear to have the weakest correlation between population and total aggravated assault, confirming the earlier finding when plotting assaults percapita by legalization status. However, it appears that in the states where marijuana is illegal, a greater proportion of aggravated assaults are performed using firearms than states in other categories. In contrast, highly populated states (Cluster 4) have the most aggravated assaults as expected, but a lesser proportion of those assaults are performed using firearms. As a final conclusion, it appears that aggravated assaults are highly correlated with population but are not significantly correlated with the legalization status of marijuana.</em></p>
 <P style="page-break-before: always">
 <div style="page-break-after: always;"></div>

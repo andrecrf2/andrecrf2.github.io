@@ -1,7 +1,7 @@
 ---
 title: 'Project 1: Exploratory Data Analysis'
 author: "Andre Ferreira AF32263"
-date: '4/2/21'
+date: '2021-04-01'
 output:
   pdf_document:
     toc: no

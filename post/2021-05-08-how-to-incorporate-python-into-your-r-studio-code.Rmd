@@ -1,0 +1,42 @@
+---
+title: "How to Incorporate Python Into Your R Studio Code"
+author: ''
+date: '2021-05-08'
+slug: how-to-incorporate-python-into-your-r-studio-code
+categories: []
+tags: []
+description: ''
+---
+Hi! In my Computational Biology class, we learned the ins and outs of R studio. R studio is a great way to organize large sets of data quickly, while also giving you the opportunity to visualize your data in fully customizable plots and charts.
+
+One cool thing about R studio is the ability to intertwine your R code with code from other languages such as Python. Although R is generally more user-friendly and easier to grasp, some people prefer to incorporate python code due to its popularity within the coding community.
+
+Here is an example of a Python string operation being used in R studio:
+
+```{python}
+one = "Hello"
+two = "there"
+one + two
+
+```
+Simply using {python} at the top of the code chunk lets you use python in your R markdown!
+
+![](https://www.thecrazyprogrammer.com/wp-content/uploads/2019/04/R-vs-Python-2.jpg)
+
+Now I will demonstrate and example of Python interacting with R using the "reticulate" package:
+
+```{r}
+library(reticulate)
+first <- "This is code from R and"
+```
+
+```{python}
+second = "this is code from python!"
+
+```
+In this next line, we will be accessing the python-defined objects in the python code above, but printing it through our R script.
+```{r}
+cat(c(first,py$second))
+```
+
+There are many other ways to allow these two languages to play with each other, but these are just some of the basics. Pretty neat right?!
