@@ -60,7 +60,7 @@
  
 <div class="blog-title">
           <h4>
-         January 1, 0001 
+         April 26, 2021 
             &nbsp;&nbsp;
             
           </h4>
@@ -104,7 +104,7 @@ tips &lt;- tips %&gt;% mutate(tipproportion=tip/total_bill)</code></pre>
 <pre class="r"><code># Visualizing multivariate plots of tip size and total bill for each day of the week
 ggplot(tips, aes(x = total_bill, y = tip)) +
 geom_point(alpha = .5) + geom_density_2d(h=2) + coord_fixed() + facet_wrap(~day)</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Formal test of multivariate normality assumption
 library(rstatix)
 group &lt;- tips$day
@@ -174,7 +174,7 @@ summarize(sum(SSB))%&gt;%pull
 # Plotting distribution of F-statistic under null hypothesis
 hist(Fs, prob=T)
 abline(v = obs_F, col=&quot;red&quot;,add=T)</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Finding p-value
 mean(Fs&gt;obs_F)</code></pre>
 <pre><code>## [1] 0.2904</code></pre>
@@ -220,7 +220,7 @@ freedom
 <p><em>total_bill_c:sexMale: The slope for tip percentage on total bill is 0.0006 greater for males compared to females.</em></p>
 <pre><code>- Plot the regression using `ggplot()` using geom_smooth(method=&quot;lm&quot;). If your interaction is numeric by numeric, refer to code in the slides to make the plot or check out the `interactions` package, which makes this easier. If you have 3 or more predictors, just chose two of them to plot for convenience. (10)</code></pre>
 <pre class="r"><code>ggplot(tips, aes(total_bill_c,tipproportion, color = sex)) + geom_smooth(method = &quot;lm&quot;, se = F, fullrange = T) + geom_point() </code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre><code>- What proportion of the variation in the outcome does your model explain? (4)
 - Check assumptions of linearity, normality, and homoskedasticity either graphically or using a hypothesis test (5)</code></pre>
 <p><em>0.1166 (R^2) of the variation in the outcome is explained by the model. </em></p>
@@ -228,9 +228,9 @@ freedom
 resids&lt;-fit$residuals
 fitted &lt;- fit$fitted.values
 ggplot()+geom_histogram(aes(resids),bins=10)</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot()+geom_point(aes(fitted, resids)) +geom_hline(yintercept=0, color = &#39;red&#39;)</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-9-2.png" width="768" style="display: block; margin: auto;" />
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-9-2.png" width="768" style="display: block; margin: auto;" />
 <em>Variance appears to be normal and constant. Relationship appears to be linear. Assumptions of linearity, normality, and homoskedstadicity are met.</em></p>
 <pre><code>- Regardless, recompute regression results with robust standard errors via `coeftest(..., vcov=vcovHC(...))`. Discuss significance of results, including any changes from before/after robust SEs if applicable. (10)</code></pre>
 <pre class="r"><code>library(sandwich)
@@ -278,7 +278,7 @@ coef(bootfit) #save coefs
 # Estimated SEs
 samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% summarize_all(sd)</code></pre>
 <pre><code>## (Intercept) total_bill_c sexMale total_bill_c:sexMale
-## 1 0.004948556 0.0006982308 0.00717921 0.0009828049</code></pre>
+## 1 0.004954148 0.0006919034 0.00713607 0.000973273</code></pre>
 <pre class="r"><code>bootfit &lt;- lm(tipproportion ~ total_bill_c +sex + total_bill_c:sex, data=boot_dat)</code></pre>
 <p><em>Running the original regression model with bootstrap SEs resulted in slightly smaller standard errors for the two predictor variables and intercept; and a slightly larger standard error for the interaction between predictors. These changes to the standard errors were not as drastic as when running the regression using robust standard errors.</em></p>
 <pre class="r"><code>summary(bootfit)</code></pre>
@@ -290,22 +290,22 @@ total_bill_c:sex,
 ##
 ## Residuals:
 ## Min 1Q Median 3Q Max
-## -0.10747 -0.03697 -0.01052 0.02598 0.51693
+## -0.106385 -0.028114 -0.004383 0.026118 0.227589
 ##
 ## Coefficients:
 ## Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) 0.1589726 0.0070657 22.499 &lt; 2e-16 ***
-## total_bill_c -0.0028411 0.0008179 -3.474 0.000609 ***
-## sexMale 0.0046980 0.0089132 0.527 0.598623
-## total_bill_c:sexMale 0.0004687 0.0009893 0.474 0.636067
+## (Intercept) 0.1567930 0.0055880 28.059 &lt; 2e-16 ***
+## total_bill_c -0.0031695 0.0007400 -4.283 2.67e-05 ***
+## sexMale 0.0029655 0.0068140 0.435 0.6638
+## total_bill_c:sexMale 0.0018099 0.0008566 2.113 0.0356 *
 ## ---
 ## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
 &#39; &#39; 1
 ##
-## Residual standard error: 0.06598 on 240 degrees of
+## Residual standard error: 0.04948 on 240 degrees of
 freedom
-## Multiple R-squared: 0.1129, Adjusted R-squared: 0.1019
-## F-statistic: 10.19 on 3 and 240 DF, p-value: 2.439e-06</code></pre>
+## Multiple R-squared: 0.1061, Adjusted R-squared: 0.0949
+## F-statistic: 9.493 on 3 and 240 DF, p-value: 5.983e-06</code></pre>
 <pre class="r"><code>summary(fit)</code></pre>
 <pre><code>##
 ## Call:
@@ -394,11 +394,11 @@ tipslog$logit&lt;-predict(fitlog,type=&quot;link&quot;)
 
 tipslog%&gt;%ggplot()+geom_density(aes(logit,color=time,fill=time), alpha=.4)+geom_vline(xintercept=0)+xlab(&quot;logit (log-odds)&quot;)+
   geom_rug(aes(logit,color=time))</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#Generating ROC plot
 ROCplot&lt;-ggplot(tipslog)+geom_roc(aes(d=y,m=total_bill_c+size_c), n.cuts=0)
 ROCplot</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-17-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-17-2.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>calc_auc(ROCplot)</code></pre>
 <pre><code>##   PANEL group       AUC
 ## 1     1    -1 0.6385361</code></pre>
@@ -437,7 +437,7 @@ table(predict=as.numeric(probtotal&gt;.5),truth=tipslog$y)%&gt;%addmargins</code
 library(plotROC)
 ROCplot2&lt;-ggplot(tipslog)+geom_roc(aes(d=y,m=probtotal), n.cuts=0)
 ROCplot2</code></pre>
-<p><img src="../../project/Project2.copy_files/figure-html/unnamed-chunk-19-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-19-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>calc_auc(ROCplot2)</code></pre>
 <pre><code>##   PANEL group      AUC
 ## 1     1    -1 0.997744</code></pre>
